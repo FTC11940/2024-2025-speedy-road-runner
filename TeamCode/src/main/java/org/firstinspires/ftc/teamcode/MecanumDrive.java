@@ -62,29 +62,37 @@ public final class MecanumDrive {
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
                 RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
 
+        // Precise Robot Measurements
+        public static double TICKS_PER_REV = 8192; // GoBilda 8192 CPR Encoder
+        public static double WHEEL_RADIUS = 1.875 / 2; // 1.46 inch diameter
+        public static double LATERAL_DISTANCE = 10.25; // Distance between parallel wheels
+        public static double PERPENDICULAR_WHEEL_OFFSET = 5.5; // Perpendicular wheel offset
+//        public static double TRACK_WIDTH = ;
+
         // drive model parameters
-        public double inPerTick = 1;
+        public double inPerTick = WHEEL_RADIUS * 2 * Math.PI / TICKS_PER_REV; // 1; //
         public double lateralInPerTick = inPerTick;
         public double trackWidthTicks = 0;
+//        public double trackWidthTicks = TRACK_WIDTH / inPerTick; //0;
 
         // feedforward parameters (in tick units)
-        public double kS = 0;
-        public double kV = 0;
-        public double kA = 0;
+        public double kS = 0.01;
+        public double kV = 1.0;
+        public double kA = 0.0;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
         public double minProfileAccel = -30;
-        public double maxProfileAccel = 50;
+        public double maxProfileAccel = 30;
 
         // turn profile parameters (in radians)
         public double maxAngVel = Math.PI; // shared with path
         public double maxAngAccel = Math.PI;
 
         // path controller gains
-        public double axialGain = 0.0;
-        public double lateralGain = 0.0;
-        public double headingGain = 0.0; // shared with turn
+        public double axialGain = 0.1;
+        public double lateralGain = 0.1;
+        public double headingGain = 0.1; // shared with turn
 
         public double axialVelGain = 0.0;
         public double lateralVelGain = 0.0;

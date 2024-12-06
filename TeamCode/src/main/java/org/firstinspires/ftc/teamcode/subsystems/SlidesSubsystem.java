@@ -120,7 +120,7 @@ public class SlidesSubsystem {
 
     public static class Constants {
         // Motor positions
-        public static final int SLIDE_OUT_POSE = 800; // increase from 500
+        public static final int SLIDE_OUT_POSE = 700; // increase from 500
         public static final int SLIDE_IN_POSE = 0;
 
         // Motor settings
