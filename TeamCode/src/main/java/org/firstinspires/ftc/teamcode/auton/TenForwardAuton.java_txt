@@ -14,11 +14,11 @@ public class TenForwardAuton extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize RoadRunner drive
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+//        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         // Initialize our localizer
-        RoadrunnerOneThreeDeads localizer = new RoadrunnerOneThreeDeads(hardwareMap, telemetry);
-        drive.setLocalizer(localizer);
+//        RoadrunnerOneThreeDeads localizer = new RoadrunnerOneThreeDeads(hardwareMap, telemetry);
+//        drive.setLocalizer(localizer);
 
         // Start pose - assuming robot starts at the origin (0, 0) facing forward (0 degrees)
         Pose2d startPose = new Pose2d(0, 0, 0);
