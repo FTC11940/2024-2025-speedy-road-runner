@@ -111,8 +111,14 @@ public class RobotContainer extends LinearOpMode {
             if (gamepad1.y) intakeSub.setIntakeArm(ARM_POSE_UP);
 
             // Intake wheel controls
+            /*
             if (gamepad1.right_bumper) intakeSub.powerIntakeWheel(WHEEL_INTAKE);
             else if (gamepad1.left_bumper) intakeSub.powerIntakeWheel(WHEEL_RELEASE);
+            else intakeSub.powerIntakeWheel(0);
+            */
+
+            if (gamepad1.right_bumper) intakeSub.smartPowerIntakeWheel(1);
+            else if (gamepad1.left_bumper) intakeSub.smartPowerIntakeWheel(-1);
             else intakeSub.powerIntakeWheel(0);
 
             /* Driver 2 Controls (Scoring & Mechanisms) */

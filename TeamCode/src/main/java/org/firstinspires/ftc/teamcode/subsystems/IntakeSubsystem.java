@@ -57,17 +57,14 @@ public class IntakeSubsystem {
     }
 
     public void smartPowerIntakeWheel(double power) {
-        /* If Sensors.getSampleStatus() is SAMPLE_DETECTED, set power to 0.1 */
-        if (sensors.getSampleStatus() == Sensors.SampleStatus.SAMPLE_DETECTED) {
-            intakeWheel.setPower(0.15);
-            /* Else set power to 1.0 */
+        if (power > 0 && sensors.getSampleStatus() == Sensors.SampleStatus.SAMPLE_GRABBED) {
+            intakeWheel.setPower(Constants.HOLDING_POWER);
         } else {
-            intakeWheel.setPower(1.0);
+            intakeWheel.setPower(power);
         }
     }
 
     public double smartPowerIntakeTrigger(double inPower, double outPower) {
-        // Return early if power inputs are too small
         if (Math.abs(inPower) < 0.05 && Math.abs(outPower) < 0.05) {
             powerIntakeWheel(0);
             return 0;
@@ -75,19 +72,19 @@ public class IntakeSubsystem {
 
         double power;
         if (inPower > outPower) {
-            // Intake direction
             if (sensors.getSampleStatus() == Sensors.SampleStatus.SAMPLE_GRABBED) {
-                power = 0.15; // Hold sample with reduced power
+                power = Constants.HOLDING_POWER;
             } else {
-                power = inPower; // Full intake power
+                power = inPower;
             }
         } else {
-            power = -outPower; // Release direction
+            power = -outPower; // Release power remains at full
         }
 
         powerIntakeWheel(power);
         return power;
     }
+
 
 
     public void groupIntakePosition() {
@@ -157,7 +154,7 @@ public class IntakeSubsystem {
         public static final double ARM_POSE_MID = 0.55;
         public static final double WHEEL_INTAKE = 1.0;
         public static final double WHEEL_RELEASE = -1.0;
-        public static final double POWER_REDUCTION = 0.10;
+        public static final double HOLDING_POWER = 0.15;
         public static final double ARM_POSITION_TOLERANCE = 0.05;
         public static final int LIFT_SAFE_THRESHOLD = 500;
     }
