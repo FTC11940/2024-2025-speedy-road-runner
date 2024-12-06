@@ -8,22 +8,24 @@ import static org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem.Constant
 import static org.firstinspires.ftc.teamcode.subsystems.SlidesSubsystem.Constants.SLIDE_IN_POSE;
 import static org.firstinspires.ftc.teamcode.subsystems.SlidesSubsystem.Constants.SLIDE_OUT_POSE;
 
-import org.firstinspires.ftc.teamcode.drive.RoadrunnerOneThreeDeads;
+//import org.firstinspires.ftc.teamcode.drive.RoadrunnerOneThreeDeads;
 import org.firstinspires.ftc.teamcode.subsystems.ClimbSubsystem;
 
 import android.annotation.SuppressLint;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
+//import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.sensors.Sensors;
 import org.firstinspires.ftc.teamcode.subsystems.BucketSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SlidesSubsystem;
+
 
 // @Disabled
 
@@ -32,7 +34,7 @@ import org.firstinspires.ftc.teamcode.subsystems.SlidesSubsystem;
 public class RobotContainer extends LinearOpMode {
 
     private Sensors sensors;
-    private SampleMecanumDrive drive;
+    private MecanumDrive drive;
     private BucketSubsystem bucketSub;
     private IntakeSubsystem intakeSub;
     private SlidesSubsystem slidesSub;
@@ -45,13 +47,13 @@ public class RobotContainer extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         /* Subsystems */
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        MecanumDrive drive = new MecanumDrive(hardwareMap);
         Sensors sensors = new Sensors(hardwareMap);
         BucketSubsystem bucketSub = new BucketSubsystem(hardwareMap, telemetry);
         IntakeSubsystem intakeSub = new IntakeSubsystem(hardwareMap, sensors);
         SlidesSubsystem slidesSub = new SlidesSubsystem(hardwareMap, sensors);
 //        DriveSubsystem driveSub = new DriveSubsystem(hardwareMap);
-        RoadrunnerOneThreeDeads localizer = new RoadrunnerOneThreeDeads(hardwareMap, telemetry);
+//        RoadrunnerOneThreeDeads localizer = new RoadrunnerOneThreeDeads(hardwareMap, telemetry);
         ClimbSubsystem climbSub = new ClimbSubsystem(hardwareMap);
 
         // Added by Claude
@@ -77,13 +79,7 @@ public class RobotContainer extends LinearOpMode {
              * Map methods (actions) from the subsystems to gamepad inputs
              * See `ControllerMapping.md` for gamepad field names
              */
-            drive.setWeightedDrivePower(
-                    new Pose2d(
-                            -gamepad1.left_stick_y,
-                            -gamepad1.left_stick_x,
-                            -gamepad1.right_stick_x
-                    )
-            );
+            drive.setDrivePowers();
 
 
             double wheelPower = intakeSub.smartPowerIntakeWheel(gamepad1.right_trigger, gamepad1.left_trigger);
@@ -193,18 +189,9 @@ public class RobotContainer extends LinearOpMode {
 
             telemetry.update(); // Send telemetry data to DriverStation
 
-
-            localizer.update();
-
-            // Updates position of the lift motor periodically
-
-// Updates position of the lift motor periodically
-
             bucketSub.updateLift();
 
             telemetry.update();
-
-
 
         } // end of while loop
 
