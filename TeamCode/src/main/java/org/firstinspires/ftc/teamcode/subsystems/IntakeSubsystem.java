@@ -152,9 +152,9 @@ public class IntakeSubsystem {
 
     public static class Constants {
         // Move from IntakeConstants to static Constants
-        public static final double ARM_POSE_DOWN = 0.20;
+        public static final double ARM_POSE_DOWN = 0.21; // Previously 0.20, 0.23 seemed high
         public static final double ARM_POSE_UP = 0.75;
-        public static final double ARM_POSE_MID = 0.475;
+        public static final double ARM_POSE_MID = 0.55;
         public static final double WHEEL_INTAKE = 1.0;
         public static final double WHEEL_RELEASE = -1.0;
         public static final double POWER_REDUCTION = 0.10;

@@ -10,6 +10,8 @@ import static org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem.Constant
 import static org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem.Constants.WHEEL_RELEASE;
 
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.PoseVelocity2d;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -57,11 +59,9 @@ public class RobotContainer extends LinearOpMode {
 
         // While loop to keep the robot running
         while (opModeIsActive()) {
-
-            /*
+            // Redundant?
             bucketSub.setIntakeSubsystem(intakeSub);
             intakeSub.setBucketSubsystem(bucketSub);
-            */
 
             /* Touch Sensors */
             slidesSub.resetSlideEncoderOnTouch();
@@ -69,7 +69,41 @@ public class RobotContainer extends LinearOpMode {
 
             /* Driver 1 Controls (Movement & Intake Arm) */
             // Driving controls
-            drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
+            double leftY = -gamepad1.left_stick_y; // Reversed to match forward direction
+            double leftX = gamepad1.left_stick_x;
+            double rightX = gamepad1.right_stick_x;
+
+            // Apply deadzone to prevent drift
+            leftY = Math.abs(leftY) > 0.1 ? leftY : 0;
+            leftX = Math.abs(leftX) > 0.1 ? leftX : 0;
+            rightX = Math.abs(rightX) > 0.1 ? rightX : 0;
+
+            // Optional: Add fine control mode
+
+            // Slow-mo
+            if (gamepad1.right_trigger > 0.6) {
+                leftY *= 0.6;
+                leftX *= 0.6;
+                rightX *= 0.6;
+            }
+
+            // Super slow-mo
+            if (gamepad1.left_trigger > 0.35) {
+                leftY *= 0.35;
+                leftX *= 0.35;
+                rightX *= 0.35;
+            }
+
+            // Update drive with new powers
+            drive.setDrivePowers(new PoseVelocity2d(
+                    new Vector2d(
+                            leftY,  // Forward/backward
+                            -leftX    // Left/right - negative for correct strafing direction
+                    ),
+                    -rightX     // Turning - negative for correct turning direction
+            ));
+
+            drive.updatePoseEstimate();
 
             // Intake arm controls
             if (gamepad1.a) intakeSub.setIntakeArm(ARM_POSE_DOWN);
@@ -99,25 +133,26 @@ public class RobotContainer extends LinearOpMode {
             // Utility controls
             if (gamepad2.back) bucketSub.tareLift();
 
-
-            /* Use the right bumper to Power Intake Wheel (for picking up pieces)
-             * Use the left bumper to reverse Power Intake Wheel (for dropping pieces into the bucket) */
-
             // End of Button Bindings
 
             telemetry.clearAll(); // Clear previous telemetry data
+            // Add drive telemetry
+            telemetry.addLine("--- DRIVE ---");
+            telemetry.addData("X Position", String.format("%.2f", drive.pose.position.x));
+            telemetry.addData("Y Position", String.format("%.2f", drive.pose.position.y));
+            telemetry.addData("Heading", String.format("%.2f°", Math.toDegrees(drive.pose.heading.toDouble())));
 
             // Intake Subsystem
             telemetry.addLine("--- INTAKE ---");
             telemetry.addData("Wheel Power",String.format("%.2f",intakeSub.intakeWheel.getPower()));
             telemetry.addData("",intakeSub.getIntakeArmStatus().getDescription());
-            telemetry.addData("Arm Position",String.format("%.2f",intakeSub.intakeArm.getPosition()));
-            telemetry.addData("Sample Status",sensors.getSampleStatus().getDescription());
+            telemetry.addData("Arm",String.format("%.2f",intakeSub.intakeArm.getPosition()));
+            telemetry.addData("Sample",sensors.getSampleStatus().getDescription());
 
             // Slide Subsystem
             telemetry.addLine("--- SLIDE ---");
             telemetry.addData("Slide",String.format("%s, (%d)",slidesSub.getSlideStatus(),slidesSub.slide.getCurrentPosition()));
-            telemetry.addData("Slide Touch Sensor",sensors.isSlideTouchPressed());
+            telemetry.addData("Touch Sensor",sensors.isSlideTouchPressed());
 
             // Bucket Subsystem
             telemetry.addLine("--- BUCKET ---");
