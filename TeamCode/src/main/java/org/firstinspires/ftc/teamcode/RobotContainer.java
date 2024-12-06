@@ -47,7 +47,7 @@ public class RobotContainer extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         /* Subsystems */
-        MecanumDrive drive = new MecanumDrive(hardwareMap);
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
         Sensors sensors = new Sensors(hardwareMap);
         BucketSubsystem bucketSub = new BucketSubsystem(hardwareMap, telemetry);
         IntakeSubsystem intakeSub = new IntakeSubsystem(hardwareMap, sensors);
@@ -79,8 +79,15 @@ public class RobotContainer extends LinearOpMode {
              * Map methods (actions) from the subsystems to gamepad inputs
              * See `ControllerMapping.md` for gamepad field names
              */
-            drive.setDrivePowers();
+            // Handle Mecanum Drive controls
+            double drive_y = -gamepad1.left_stick_y; // Negative because Y axis is reversed
+            double drive_x = gamepad1.left_stick_x;
+            double turn = gamepad1.right_stick_x;
 
+            // Apply deadzone
+            drive_y = Math.abs(drive_y) > 0.1 ? drive_y : 0;
+            drive_x = Math.abs(drive_x) > 0.1 ? drive_x : 0;
+            turn = Math.abs(turn) > 0.1 ? turn : 0;
 
             double wheelPower = intakeSub.smartPowerIntakeWheel(gamepad1.right_trigger, gamepad1.left_trigger);
 
