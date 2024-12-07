@@ -1,0 +1,69 @@
+package org.firstinspires.ftc.teamcode.auton;
+
+import com.acmerobotics.roadrunner.PoseVelocity2d;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.acmerobotics.roadrunner.Pose2d;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.MecanumDrive;
+
+@Autonomous(name = "Simple Mecanum Time Auto")
+public class AutoTest2 extends LinearOpMode {
+    private MecanumDrive drive;
+    private ElapsedTime runtime = new ElapsedTime();
+
+    @Override
+    public void runOpMode() {
+        // Initialize drive
+        // Starting pose - adjust x,y coordinates and heading as needed for your starting position
+        drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
+
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
+
+        if (isStopRequested()) return;
+
+        // Reset the timer
+        runtime.reset();
+
+        // Step 1: Drive forward at 30% power for 1 second
+        while (opModeIsActive() && runtime.seconds() < 1.0) {
+            // Forward movement using PoseVelocity2d
+            // x is forward/backward, y is left/right, heading is rotation
+            drive.setDrivePowers(new PoseVelocity2d(0.3, 0, 0));
+
+            // Update pose estimation
+            drive.updatePoseEstimate();
+
+            telemetry.addData("Status", "Driving Forward");
+            telemetry.addData("Time", runtime.seconds());
+            telemetry.update();
+        }
+
+        // Stop the robot
+        drive.setDrivePowers(new PoseVelocity2d(0, 0, 0));
+
+        // Small pause
+        sleep(100);
+
+        // Reset timer for next movement
+        runtime.reset();
+
+        // Step 2: Turn left 110 degrees (using radians) at 60% turn power
+        while (opModeIsActive() && runtime.seconds() < 0.75) {
+            // Last parameter is turn power: positive is counterclockwise
+            drive.setDrivePowers(new PoseVelocity2d(0, 0, 0.6));
+
+            // Update pose estimation
+            drive.updatePoseEstimate();
+
+            telemetry.addData("Status", "Turning Left");
+            telemetry.addData("Time", runtime.seconds());
+            telemetry.update();
+        }
+
+        // Stop the robot
+        drive.setDrivePowers(new PoseVelocity2d(0, 0, 0));
+    }
+}
