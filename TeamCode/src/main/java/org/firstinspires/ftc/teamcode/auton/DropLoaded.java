@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
+@Disabled
 @Autonomous(name = "Drop Loaded")
 public class DropLoaded extends LinearOpMode {
     // Declare motors

@@ -156,7 +156,7 @@ public class BucketSubsystem {
 
     public void setLiftDown() {
         if (isSafeToBucketUp()) {
-            setLift(Constants.LIFT_DOWN,0.60);
+            setLift(Constants.LIFT_DOWN,0.40); // Previously 0.60
             // After reaching down position, ensure motor is stopped
             if (Math.abs(lift.getCurrentPosition()) < Constants.APPROX_LIFT_POSE) {
                 lift.setPower(0);
@@ -164,6 +164,15 @@ public class BucketSubsystem {
         }
     }
 
+    public void setLiftDownSloMo() {
+        if (isSafeToBucketUp()) {
+            setLift(Constants.LIFT_DOWN,0.60);
+            // After reaching down position, ensure motor is stopped
+            if (Math.abs(lift.getCurrentPosition()) < Constants.APPROX_LIFT_POSE) {
+                lift.setPower(0);
+            }
+        }
+    }
     public void moveLiftUp() {
         if (isSafeToBucketUp()) {
             int currentPosition = lift.getCurrentPosition();
@@ -259,7 +268,7 @@ public class BucketSubsystem {
     // Constants
     public static class Constants {
         // Bucket positions
-        public static final double BUCKET_DOWN = 0.85; // 0.90
+        public static final double BUCKET_DOWN = 0.8; // 0.85// 0.90
         public static final double BUCKET_MID = 0.70; // 0.575
         public static final double BUCKET_UP = 0.3; // 0.15
         public static final double BUCKET_POSITION_TOLERANCE = 0.05;
