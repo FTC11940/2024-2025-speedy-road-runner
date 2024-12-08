@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
-@Autonomous(name = "Drive Forward 10")
+@Autonomous(name = "Drive 10in ver.2")
 
 public class Mark03 extends LinearOpMode {
     @Override

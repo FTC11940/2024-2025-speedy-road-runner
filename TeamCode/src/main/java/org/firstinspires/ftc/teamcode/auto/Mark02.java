@@ -10,7 +10,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
-@Autonomous(name = "Drive Forward 10 Inches")
+@Autonomous(name = "Drive 10in ver.1")
 public class Mark02 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
