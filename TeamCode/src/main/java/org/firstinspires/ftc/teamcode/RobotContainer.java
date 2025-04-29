@@ -30,10 +30,10 @@ public class RobotContainer extends LinearOpMode {
 
     private MecanumDrive drive;
     private Sensors sensors;
-    private BucketSubsystem bucketSub;
-    private IntakeSubsystem intakeSub;
-    private SlidesSubsystem slidesSub;
-    private ClimbSubsystem climbSub;
+//    private BucketSubsystem bucketSub;
+//    private IntakeSubsystem intakeSub;
+//    private SlidesSubsystem slidesSub;
+//    private ClimbSubsystem climbSub;
 
     @Override
 
@@ -41,31 +41,31 @@ public class RobotContainer extends LinearOpMode {
 
         /* Subsystems */
         drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
-        sensors = new Sensors(hardwareMap);
-        bucketSub = new BucketSubsystem(hardwareMap,sensors);
-        intakeSub = new IntakeSubsystem(hardwareMap,sensors);
-        slidesSub = new SlidesSubsystem(hardwareMap,sensors);
-        climbSub = new ClimbSubsystem(hardwareMap);
+//        sensors = new Sensors(hardwareMap);
+//        bucketSub = new BucketSubsystem(hardwareMap,sensors);
+//        intakeSub = new IntakeSubsystem(hardwareMap,sensors);
+//        slidesSub = new SlidesSubsystem(hardwareMap,sensors);
+//        climbSub = new ClimbSubsystem(hardwareMap);
 
-        bucketSub.setIntakeSubsystem(intakeSub);
-        intakeSub.setBucketSubsystem(bucketSub);
+//        bucketSub.setIntakeSubsystem(intakeSub);
+//        intakeSub.setBucketSubsystem(bucketSub);
 
         // Required to initialize the subsystems when starting the OpMode
         waitForStart();
 
         /* Reset the motor encoder position after starting the OpMode */
-        slidesSub.resetSlideEncoder();
-        bucketSub.resetLiftEncoder();
+//        slidesSub.resetSlideEncoder();
+//        bucketSub.resetLiftEncoder();
 
         // While loop to keep the robot running
         while (opModeIsActive()) {
             // Redundant?
-            bucketSub.setIntakeSubsystem(intakeSub);
-            intakeSub.setBucketSubsystem(bucketSub);
+//            bucketSub.setIntakeSubsystem(intakeSub);
+//            intakeSub.setBucketSubsystem(bucketSub);
 
             /* Touch Sensors */
-            slidesSub.resetSlideEncoderOnTouch();
-            bucketSub.resetLiftEncoderOnTouch();
+//            slidesSub.resetSlideEncoderOnTouch();
+//            bucketSub.resetLiftEncoderOnTouch();
 
             /* Driver 1 Controls (Movement & Intake Arm) */
             // Driving controls
@@ -106,34 +106,34 @@ public class RobotContainer extends LinearOpMode {
             drive.updatePoseEstimate();
 
             // Intake arm controls
-            if (gamepad1.a) intakeSub.setIntakeArm(ARM_POSE_DOWN);
-            if (gamepad1.b) intakeSub.setIntakeArm(ARM_POSE_MID);
-            if (gamepad1.y) intakeSub.setIntakeArm(ARM_POSE_UP);
+//            if (gamepad1.a) intakeSub.setIntakeArm(ARM_POSE_DOWN);
+//            if (gamepad1.b) intakeSub.setIntakeArm(ARM_POSE_MID);
+//            if (gamepad1.y) intakeSub.setIntakeArm(ARM_POSE_UP);
 
             // Intake wheel controls
             // if (gamepad1.right_bumper) intakeSub.powerIntakeWheel(WHEEL_INTAKE);
-            if (gamepad1.right_bumper) intakeSub.smartPowerIntakeWheel(1.0);
-            else if (gamepad1.left_bumper) intakeSub.smartPowerIntakeWheel(-1.0);
-            else intakeSub.powerIntakeWheel(0);
+//            if (gamepad1.right_bumper) intakeSub.smartPowerIntakeWheel(1.0);
+//            else if (gamepad1.left_bumper) intakeSub.smartPowerIntakeWheel(-1.0);
+//            else intakeSub.powerIntakeWheel(0);
 
             /* Driver 2 Controls (Scoring & Mechanisms) */
             // Bucket controls
-            if (gamepad2.a) bucketSub.setBucket(BUCKET_DOWN);
-            if (gamepad2.b) bucketSub.setBucket(BUCKET_MID);
-            if (gamepad2.y) bucketSub.setBucket(BUCKET_UP);
+//            if (gamepad2.a) bucketSub.setBucket(BUCKET_DOWN);
+//            if (gamepad2.b) bucketSub.setBucket(BUCKET_MID);
+//            if (gamepad2.y) bucketSub.setBucket(BUCKET_UP);
 
             // Lift controls
-            if (gamepad2.dpad_up) bucketSub.moveLiftUp();
-            else if (gamepad2.dpad_left) bucketSub.setLiftLow();
-            else if (gamepad2.dpad_right) bucketSub.setLiftHigh();
-            else if (gamepad2.dpad_down) bucketSub.setLiftDown();
+//            if (gamepad2.dpad_up) bucketSub.moveLiftUp();
+//            else if (gamepad2.dpad_left) bucketSub.setLiftLow();
+//            else if (gamepad2.dpad_right) bucketSub.setLiftHigh();
+//            else if (gamepad2.dpad_down) bucketSub.setLiftDown();
 
             // Slides control with Triggers
-            slidesSub.controlSlides(gamepad2);
+//            slidesSub.controlSlides(gamepad2);
 
             // Utility controls
-            if (gamepad2.back) bucketSub.tareLift();
-
+//            if (gamepad2.back) bucketSub.tareLift();
+//
             // End of Button Bindings
 
             telemetry.clearAll(); // Clear previous telemetry data
@@ -144,24 +144,24 @@ public class RobotContainer extends LinearOpMode {
             telemetry.addData("Heading", String.format("%.2f°", Math.toDegrees(drive.pose.heading.toDouble())));
 
             // Intake Subsystem
-            telemetry.addLine("--- INTAKE ---");
-            telemetry.addData("Wheel Power",String.format("%.2f",intakeSub.intakeWheel.getPower()));
-            telemetry.addData("",intakeSub.getIntakeArmStatus().getDescription());
-            telemetry.addData("Arm",String.format("%.2f",intakeSub.intakeArm.getPosition()));
-            telemetry.addData("Sample",sensors.getSampleStatus().getDescription());
+//            telemetry.addLine("--- INTAKE ---");
+//            telemetry.addData("Wheel Power",String.format("%.2f",intakeSub.intakeWheel.getPower()));
+//            telemetry.addData("",intakeSub.getIntakeArmStatus().getDescription());
+//            telemetry.addData("Arm",String.format("%.2f",intakeSub.intakeArm.getPosition()));
+//            telemetry.addData("Sample",sensors.getSampleStatus().getDescription());
 
             // Slide Subsystem
-            telemetry.addLine("--- SLIDE ---");
-            telemetry.addData("Slide",String.format("%s, (%d)",slidesSub.getSlideStatus(),slidesSub.slide.getCurrentPosition()));
-            telemetry.addData("Touch Sensor",sensors.isSlideTouchPressed());
+//            telemetry.addLine("--- SLIDE ---");
+//            telemetry.addData("Slide",String.format("%s, (%d)",slidesSub.getSlideStatus(),slidesSub.slide.getCurrentPosition()));
+//            telemetry.addData("Touch Sensor",sensors.isSlideTouchPressed());
 
             // Bucket Subsystem
-            telemetry.addLine("--- BUCKET ---");
-            telemetry.addData("Bucket Status",String.format("%s, (%.2f)",bucketSub.getBucketStatus(),bucketSub.bucketServo.getPosition()));
-            telemetry.addData("Lift Status",String.format("%s, (%d)",bucketSub.getLiftStatus(),bucketSub.lift.getCurrentPosition()));
-            telemetry.addData("Lift Motor Power",String.format("%.2f A",bucketSub.lift.getPower()));
-
-            bucketSub.updateLift();
+//            telemetry.addLine("--- BUCKET ---");
+//            telemetry.addData("Bucket Status",String.format("%s, (%.2f)",bucketSub.getBucketStatus(),bucketSub.bucketServo.getPosition()));
+//            telemetry.addData("Lift Status",String.format("%s, (%d)",bucketSub.getLiftStatus(),bucketSub.lift.getCurrentPosition()));
+//            telemetry.addData("Lift Motor Power",String.format("%.2f A",bucketSub.lift.getPower()));
+//
+//            bucketSub.updateLift();
             telemetry.update();
 
         } // end of while loop

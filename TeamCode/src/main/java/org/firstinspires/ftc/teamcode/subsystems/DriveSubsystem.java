@@ -7,30 +7,30 @@ package org.firstinspires.ftc.teamcode.subsystems;
  *
  * */
 
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 public class DriveSubsystem {
-    private DcMotor leftFront, leftRear, rightRear, rightFront;
+    private DcMotorEx leftFront, leftRear, rightRear, rightFront;
 
     private IMU imu;
     private VoltageSensor batteryVoltageSensor;
 
     public DriveSubsystem(HardwareMap hardwareMap) {
-        leftFront = hardwareMap.get(DcMotor.class,"leftFront");
-        leftRear = hardwareMap.get(DcMotor.class,"leftBack");
-        rightRear = hardwareMap.get(DcMotor.class,"rightBack");
-        rightFront = hardwareMap.get(DcMotor.class,"rightFront");
+        leftFront = hardwareMap.get(DcMotorEx.class,"FrontLeft");
+        leftRear = hardwareMap.get(DcMotorEx.class,"BackLeft");
+        rightRear = hardwareMap.get(DcMotorEx.class,"BackRight");
+        rightFront = hardwareMap.get(DcMotorEx.class,"FrontRight");
 
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
-        leftRear.setDirection(DcMotor.Direction.REVERSE);
+        leftFront.setDirection(DcMotorEx.Direction.REVERSE);
+        leftRear.setDirection(DcMotorEx.Direction.REVERSE);
 
-        setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
-    public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior) {
+    public void setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior zeroPowerBehavior) {
         leftFront.setZeroPowerBehavior(zeroPowerBehavior);
         leftRear.setZeroPowerBehavior(zeroPowerBehavior);
         rightRear.setZeroPowerBehavior(zeroPowerBehavior);
